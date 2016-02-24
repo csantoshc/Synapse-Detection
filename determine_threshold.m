@@ -4,6 +4,7 @@
 %    Author: Saket Navlakha                                              %
 %    Date  : August 2013                                                 %
 %                                                                        %
+%    Edited: Santosh Chandrasekaran                                      %
 %========================================================================%
 
 function Output = determine_threshold(dir,F,L,M,F2,L2,M2,Model_SRE_61_imqual)

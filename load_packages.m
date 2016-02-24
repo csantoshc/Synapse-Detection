@@ -1,3 +1,6 @@
+% This script saves the filepaths to the required packages to generate features and use 
+% SVM. Also, compiles the required C scripts and generates MEX files
+
 %% Adding the filepaths to the package folders
 
 baseDir = pwd; % Make sure the current directory is the one where the Tools folder is

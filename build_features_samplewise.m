@@ -2,7 +2,9 @@
 %    BUILDS FEATURE MATRIX FROM TRAINING IMAGES                          %
 %                                                                        %
 %    Author: Saket Navlakha                                              %
-%    Date  : September 2012                                              %
+%    Date  : September 2012
+%    
+%    Edited: Santosh Chandrasekaran
 %                                                                        %
 %========================================================================%
 

@@ -1,3 +1,11 @@
+%========================================================================%
+%    WRAPPER FUNCTION THAT CALLS APPROPRIATE FUNCTIONS TO
+%    BUILD FEATURES, DETERMINE THRESHOLD AND DETECT SYNAPSES                                                    %
+%                                                                        %
+%    Author: Santosh Chandrasekaran
+%    Date  : August 2013                                                 %
+%========================================================================%
+
 %% Assumption - Each folder in the parent directory has images obtained from a unique sample
 function run_synapse_detection(parentDir, trainingsetDir)
 % croppix = 33 for 125x125 trainingset image -> 61x61 after rotation to align

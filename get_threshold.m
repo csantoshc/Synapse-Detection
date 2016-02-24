@@ -1,3 +1,11 @@
+%========================================================================%
+%    DETERMINES THRESHOLD AND PRECISION AT 50% RECALL                    %
+%                                                                        %
+%    Author: Saket Navlakha & Santosh Chandrasekaran                     %
+%    Date  : September 2013
+%                                                                        %
+%========================================================================%
+
 function [Threshold, Precision] = get_threshold(Output)
 % GET_THRESHOLD
 % Searches for the threshold at which the algorithm gives a recall of 50%

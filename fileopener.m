@@ -1,3 +1,10 @@
+%========================================================================%
+%  OPENS AND PARSES THE TEXT FILE THAT HAS DATA ABOUT DETECTED SYNAPSES  %                          
+%                                                                        %
+%    Author: Santosh Chandrasekaran                                      %
+%                                                                        %
+%========================================================================%
+
 function [images, synapseindex, properties, num_pos] = fileopener(textfile,imagefiles,threshold)
 % this function opens up the '_counts' textfile that was generated after analyzing
 % all the images of a sample

@@ -3,7 +3,8 @@
 %                                                                        %
 %    Author: Saket Navlakha                                              %
 %    Date  : May 2013                                                    %
-%                                                                        %
+%    
+%    Edited: Santosh Chandrasekaran
 %========================================================================%
 
 function build_training_data_from_segments(srcdir, savingDirname)
