@@ -13,7 +13,7 @@
 //
 // Notes:
 // ------
-// This method handles the border by repeating the closest values to the point accessed. 
+// This method handles the border by repeating the closest values to the point accessed.
 // This is different from matlabs border handling.
 //
 // Example
@@ -24,12 +24,12 @@
 //    IMG=load('mandrill');
 //    IMG = ind2rgb(IMG.X, IMG.map);
 //    [Dx Dy] = meshgrid(130:0.1:250, -150:0.1:-50);
-//    
+//
 //    R = [cos(pi/4) sin(pi/4); -sin(pi/4) cos(pi/4)];
 //    RD = R * [Dx(:)'; Dy(:)'] + 250;
 //    RDx = reshape(RD(1,:), size(Dx));
 //    RDy = reshape(RD(2,:), size(Dy));
-//    
+//
 //    methods = {'nearest', 'linear', 'cubic'};
 //    la=nan(1,3);
 //    for i=1:3
@@ -47,14 +47,14 @@
 // GPL
 // (c) 2008 Brian Amberg
 // http://www.brian-amberg.de/
-  
+
 #include <mex.h>
 #include <stdlib.h>
 #include <math.h>
 #include <string.h>
 #include <iostream>
 
-inline 
+inline
 static
 int access(int M, int N, int x, int y) {
   if (x<0) x=0; else if (x>=N) x=N-1;
@@ -69,7 +69,7 @@ void indices_linear(
     int &f10_i,
     int &f01_i,
     int &f11_i,
-    const int x, const int y, 
+    const int x, const int y,
     const mwSize &M, const mwSize &N) {
   if (x<=1 || y<=1 || x>=N-2 || y>=M-2) {
     f00_i = access(M, N, x,   y  );
@@ -105,7 +105,7 @@ void indices_cubic(
     int &f13_i,
     int &f23_i,
     int &f33_i,
-    const int x, const int y, 
+    const int x, const int y,
     const mwSize &M, const mwSize &N) {
   if (x<=2 || y<=2 || x>=N-3 || y>=M-3) {
     f00_i = access(M, N, x-1, y-1);
@@ -211,7 +211,7 @@ void interpolate_linear(REAL *pO, const REAL *pF, const REAL *pX, const REAL *pY
     int f00_i, f10_i, f01_i, f11_i;
 
     indices_linear(
-        f00_i, f10_i, f01_i, f11_i, 
+        f00_i, f10_i, f01_i, f11_i,
         int(x_floor-1), int(y_floor-1), M, N);
 
     for (mwSize j=0; j<P; ++j) {
@@ -248,7 +248,7 @@ void interpolate_linear_unrolled(REAL *pO, const REAL *pF, const REAL *pX, const
     int f00_i, f10_i, f01_i, f11_i;
 
     indices_linear(
-        f00_i, f10_i, f01_i, f11_i, 
+        f00_i, f10_i, f01_i, f11_i,
         int(x_floor-1), int(y_floor-1), M, N);
 
     for (mwSize j=0; j<P; ++j) {
@@ -292,11 +292,11 @@ void interpolate_bicubic(REAL *pO, const REAL *pF, const REAL *pX, const REAL *p
     const REAL wy2 = 0.5 * (      dy + 4.0*dyy - 3.0 * dyyy);
     const REAL wy3 = 0.5 * (         -     dyy +       dyyy);
 
-    int f00_i, f10_i, f20_i, f30_i, f01_i, f11_i, f21_i, f31_i; 
+    int f00_i, f10_i, f20_i, f30_i, f01_i, f11_i, f21_i, f31_i;
     int f02_i, f12_i, f22_i, f32_i, f03_i, f13_i, f23_i, f33_i;
 
     indices_cubic(
-        f00_i, f10_i, f20_i, f30_i, f01_i, f11_i, f21_i, f31_i, 
+        f00_i, f10_i, f20_i, f30_i, f01_i, f11_i, f21_i, f31_i,
         f02_i, f12_i, f22_i, f32_i, f03_i, f13_i, f23_i, f33_i,
         int(x_floor-1), int(y_floor-1), M, N);
 
@@ -344,11 +344,11 @@ void interpolate_bicubic_unrolled(REAL *pO, const REAL *pF, const REAL *pX, cons
     const REAL wy3 = 0.5 * (         -     dyy +       dyyy);
 
 
-    int f00_i, f10_i, f20_i, f30_i, f01_i, f11_i, f21_i, f31_i; 
+    int f00_i, f10_i, f20_i, f30_i, f01_i, f11_i, f21_i, f31_i;
     int f02_i, f12_i, f22_i, f32_i, f03_i, f13_i, f23_i, f33_i;
 
     indices_cubic(
-        f00_i, f10_i, f20_i, f30_i, f01_i, f11_i, f21_i, f31_i, 
+        f00_i, f10_i, f20_i, f30_i, f01_i, f11_i, f21_i, f31_i,
         f02_i, f12_i, f22_i, f32_i, f03_i, f13_i, f23_i, f33_i,
         int(x_floor-1), int(y_floor-1), M, N);
 
@@ -387,7 +387,7 @@ InterpolationMethod parseInterpolationMethod(int nrhs, const mxArray *prhs[]) {
   return(Cubic);
 }
 
-template <class REAL> 
+template <class REAL>
 static void interpolate(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs[]) {
 
   const mwSize *F_dims = mxGetDimensions(prhs[0]);
@@ -422,7 +422,7 @@ static void interpolate(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs
   const REAL *pF = (REAL*)mxGetData(prhs[0]);
   const REAL *pX = (REAL*)mxGetData(prhs[1]);
   const REAL *pY = (REAL*)mxGetData(prhs[2]);
-  REAL       *pO = (REAL*)mxGetData(plhs[0]);  
+  REAL       *pO = (REAL*)mxGetData(plhs[0]);
 
   switch(parseInterpolationMethod(nrhs, prhs)) {
     case Nearest:
@@ -436,7 +436,7 @@ static void interpolate(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs
         case 7: interpolate_nearest_unrolled<REAL, 7>(pO, pF, pX, pY, ND, M, N); break;
         case 8: interpolate_nearest_unrolled<REAL, 8>(pO, pF, pX, pY, ND, M, N); break;
         case 9: interpolate_nearest_unrolled<REAL, 9>(pO, pF, pX, pY, ND, M, N); break;
-        default: 
+        default:
                 interpolate_nearest<REAL>(pO, pF, pX, pY, ND, M, N, P);
       }
       break;
@@ -451,7 +451,7 @@ static void interpolate(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs
         case 7: interpolate_linear_unrolled<REAL, 7>(pO, pF, pX, pY, ND, M, N); break;
         case 8: interpolate_linear_unrolled<REAL, 8>(pO, pF, pX, pY, ND, M, N); break;
         case 9: interpolate_linear_unrolled<REAL, 9>(pO, pF, pX, pY, ND, M, N); break;
-        default: 
+        default:
                 interpolate_linear<REAL>(pO, pF, pX, pY, ND, M, N, P);
       }
       break;
@@ -466,7 +466,7 @@ static void interpolate(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs
         case 7: interpolate_bicubic_unrolled<REAL, 7>(pO, pF, pX, pY, ND, M, N); break;
         case 8: interpolate_bicubic_unrolled<REAL, 8>(pO, pF, pX, pY, ND, M, N); break;
         case 9: interpolate_bicubic_unrolled<REAL, 9>(pO, pF, pX, pY, ND, M, N); break;
-        default: 
+        default:
                 interpolate_bicubic<REAL>(pO, pF, pX, pY, ND, M, N, P);
       }
       break;
@@ -476,11 +476,13 @@ static void interpolate(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs
 }
 
 // %%%%% ADDED THIS %%%%%%
+#ifdef _WIN32
 static inline double round(double val) {
   return floor(val + 0.5);
 }
+#endif
 // %%%%%%%%%%%%%%%%%%%%%%%
-  
+
 void mexFunction(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
 
