@@ -4,11 +4,16 @@
 %% Adding the filepaths to the package folders
 
 baseDir = pwd; % Make sure the current directory is the one where the Tools folder is
-baseDir = fullfile(baseDir,'Tools');
+baseToolsDir = fullfile(baseDir,'Tools');
+if ~exist(baseToolsDir,'dir') && ~exist(fullfile(baseDir,'count_synapses'),'dir')
+    disp('Error: Set current directory to the one where the Tools folder is located')
+    break
+end
 
 addpath(genpath(baseDir))
-addpath(genpath(fullfile(baseDir,'ba_interpolation','ba_interpolation')))
+addpath(genpath(baseToolsDir))
 addpath(genpath(fullfile(baseDir,'count_synapses')))
+addpath(genpath(fullfile(baseDir,'ba_interpolation','ba_interpolation')))
 addpath(genpath(fullfile(baseDir,'HoG')))
 addpath(genpath(fullfile(baseDir,'libsvm-3.12','libsvm-3.12')))
 savepath

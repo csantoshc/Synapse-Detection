@@ -54,6 +54,14 @@
 #include <string.h>
 #include <iostream>
 
+// %%%%% ADDED THIS %%%%%%
+#ifdef _WIN32
+inline double round(double val) {
+  return floor(val + 0.5);
+}
+#endif
+// %%%%%%%%%%%%%%%%%%%%%%%
+
 inline
 static
 int access(int M, int N, int x, int y) {
@@ -475,13 +483,6 @@ static void interpolate(int nlhs, mxArray *plhs[], int nrhs, const mxArray *prhs
   }
 }
 
-// %%%%% ADDED THIS %%%%%%
-#ifdef _WIN32
-static inline double round(double val) {
-  return floor(val + 0.5);
-}
-#endif
-// %%%%%%%%%%%%%%%%%%%%%%%
 
 void mexFunction(int nlhs, mxArray *plhs[],
     int nrhs, const mxArray *prhs[]) {
