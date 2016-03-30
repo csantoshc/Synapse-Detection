@@ -6,6 +6,16 @@ Features_label_SRE_125_61.mat contains
 1. the Features and Labels of 1665 synapses and 10441 non-synapse objects that were manually labeled.
 2. the Model_SRE_61 is the classifier built from these features and used for synapse detection
 
+Building the training set involves manually labeling selected objects in the images as synapses or non-synapses. Then, the program crops out a patch of the image surrounding each object. The size of this patch can be defined by the user in the variable ‘patch_size’. Currently, it is set at 125 x 125 pixels. Following this, while building features during the analysis, each object is rotated and cropped down further defined by the variable ‘crop_down’. Currently, this is set to get a final patch of 61 x 61 pixels in
+process_patch.m.
+Ensure that both trainingset and testset images are subjected to same treatment, i.e., the parameters are the same.
+
+    bw_thresh = 0.10;            % threshold for selecting objects in binary image
+    min_synapse_size = 300;      % min # of segment pixels for synapses.
+    max_synapse_size = 60*60;    % max # of segment pixels for synapses.
+    min_synapse_perimeter = 90;  % min # of segment pixels for synapse perimeter.
+    patch_size = 125;            % size of the patch taken around the centroid. previously was 75
+
 Setting up the required packages
 
 1.	Designate a root folder. In this example, let it be E:\EMImages.
@@ -66,11 +76,8 @@ Building your own Model: In case you want to build your own Model from scratch d
 
 In Matlab,
 
-    >> [Features,Labels,Mapping] = build_features_samplewise(Dir,croppix)
+    >> [Features,Labels,Mapping] = build_features_samplewise(trainingsetDir)
     >> libsvmwrite('Examples.txt',Labels,sparse(Features));
-(% croppix = 33 for 125x125px trainingset image -> 61x61px after rotation to align
-% croppix = 13 for 125x125 -> 101x101
-% croppix = 8  for 76x76 -> 61x61)
 
 Then in python do a grid search,
 
