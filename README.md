@@ -43,11 +43,10 @@ Analysis of images for synapse detection
 
       >> build_training_data_from_segments(‘P-1839’,'trainingset_P1839');
 
-3.  Analyzing the images -
-    Program to be used run_synapse_detection.m 
-    It should be called like this –
+3.  Analyzing the images - 
+    Program to be used run_synapse_detection.m It should be called like this - 
 
-      >> run_synapse_detection(‘P-1839’,'trainingset_P1839');
+>> run_synapse_detection('P-1839','trainingset_P1839')
 
   i.  Parent folder is P-1839
 
@@ -55,7 +54,7 @@ Analysis of images for synapse detection
       Here, it would be trainingset_P1839
       This is used by build_features_samplewise to build the feature set for the labeled objects.
 
-  iii.The confidence threshold will be determined that will proved a recall of 50%. This is done by generating the ROC curves in the        function determine_threshold and then using get_threshold to choose the appropriate threshold.
+  iii.The confidence threshold that will provide a recall of 50% is determined. This is done by generating the ROC curves in the            function determine_threshold and then using get_threshold to choose the appropriate threshold.
 
   iv. Then, the function test_directory will go through all samples individually that are part of the parent folder and analyze all         the images in each sample folder to detect synapses based on the threshold.
 
