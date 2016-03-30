@@ -16,7 +16,7 @@ Building the training set involves manually labeling selected objects in the ima
     patch_size = 125;            % size of the patch taken around the centroid. previously was 75
 ```
 
-**++Setting up the required packages++**
+**Setting up the required packages**
 
 1.  Designate a root folder. In this example, let it be *E:\EMImages*.
 2.  Download and copy the Tools folder into the root folder, as in *E:\EMImages\Tools*.
@@ -29,19 +29,21 @@ Building the training set involves manually labeling selected objects in the ima
 
 3.  Run the script *load_packages.m*. This will compile all the required MEX files. (Type ‘*load_packages*’ in the command window and hit ‘*Enter*’).
 
-**++Analysis of images for synapse detection++**
+**Analysis of images for synapse detection**
 
-1. ++Folder structure++ – All images from a single sample is stored in a specific folder. The folders of different samples are in one parent directory which resides in the root folder (here – *E:\EMImages*) where all the packages have been installed.
-2. ++Labeling the synapses++ -
+1. Folder structure – All images from a single sample is stored in a specific folder. The folders of different samples are in one parent directory which resides in the root folder (here – *E:\EMImages*) where all the packages have been installed.
+2. Labeling the synapses -
 This step lets the user manually label synapses across all samples and save the labeled images in a single folder Program to be used – *build_training_data_from_segments.m* While calling the function,
-    
+
   i.  Specify the parent folder containing all samples.
 
   ii. Name a new folder where the program will store all the labeled objects, e.g. ‘*trainingset_P1839*’. It should be called like  this -
-  `>> build_training_data_from_segments(‘P-1839’,'trainingset_P1839');`
 
-3.  ++Analyzing the images++ - 
+`>> build_training_data_from_segments(‘P-1839’,'trainingset_P1839');`
+
+3.  Analyzing the images -
     Program to be used *run_synapse_detection.m*. It should be called like this -
+
 `>> run_synapse_detection('P-1839','trainingset_P1839')`
 
 	i.  Parent folder is *P-1839*
@@ -52,7 +54,7 @@ This step lets the user manually label synapses across all samples and save the 
 
   iv. Then, the function *test_directory* will go through all samples individually that are part of the parent folder and analyze all the images in each sample folder to detect synapses based on the threshold.
 
-++Building your own Model++: In case you want to build your own Model from scratch do the following
+Building your own Model: In case you want to build your own Model from scratch do the following
 
 In Matlab,
 
