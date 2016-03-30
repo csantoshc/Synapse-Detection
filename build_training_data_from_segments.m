@@ -27,10 +27,19 @@ num_images_per = 10;         % number of images per sample to label.
 % 'process_patch.m '
 %% Main function.
 allfiles = dir(dataDir);
+if isempty(allfiles)
+    disp(['Error:' dataDir ' not found'])
+    return
+end
 imgfolderidx = [allfiles(:).isdir];
 Imagedirs = {allfiles(imgfolderidx).name};
 Imagedirs(ismember(Imagedirs,{'.','..'})) = [];
 Imagedirs = Imagedirs';
+if isempty(Imagedirs)
+    disp('Error: No image folders detected')
+    return
+end
+
 % Iterate through each folder (or equivalently, sample)
 directories = 1:length(Imagedirs);
 for dirs = directories
@@ -43,6 +52,10 @@ for dirs = directories
     imagefiles = dir([srcdir '\*.TIF']);
     if isempty(imagefiles)
         imagefiles = dir([srcdir '\*.tif']);
+        if isempty(Imagedirs)
+            disp('Error: No images (TIFF files) detected')
+            return
+        end
     end
 
     % Interval for which to select images to label.

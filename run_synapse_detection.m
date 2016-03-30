@@ -10,6 +10,10 @@
 function run_synapse_detection(parentDir, trainingsetDir)
 
     disp('Building features for labeled synapses')
+    if ~exist('trainingset_P1839','dir')
+        disp(['Error:' trainingsetDir ' not found'])
+        return
+    end
     [Features,Labels,Mapping] = build_features_samplewise(trainingsetDir);
     save(fullfile(parentDir,'Features_Labels.mat'))
     
