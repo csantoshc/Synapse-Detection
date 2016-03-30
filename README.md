@@ -68,6 +68,9 @@ In Matlab,
 
     >> [Features,Labels,Mapping] = build_features_samplewise(Dir,croppix)
     >> libsvmwrite('Examples.txt',Labels,sparse(Features));
+(% croppix = 33 for 125x125px trainingset image -> 61x61px after rotation to align
+% croppix = 13 for 125x125 -> 101x101
+% croppix = 8  for 76x76 -> 61x61)
 
 Then in python do a grid search,
 
