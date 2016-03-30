@@ -21,11 +21,16 @@ Building the training set involves manually labeling selected objects in the ima
 1.  Designate a root folder. In this example, let it be *E:\EMImages*.
 2.  Download and copy the Tools folder into the root folder, as in *E:\EMImages\Tools*.
     Alternatively, download and copy the files from the websites listed below into the *Tools* folder.
-    a. The *ba_interpolation* package, available here - http://www.mathworks.com/matlabcentral/fileexchange/20342-image-interpolation-bainterp2
+    
+    a. *ba_interpolation* package, available here - http://www.mathworks.com/matlabcentral/fileexchange/20342-image-interpolation-bainterp2
+    
     b. *MR8 filter bank*, available here - http://www.robots.ox.ac.uk/~vgg/research/texclass/filters.html
+    	
     c. *HoG descriptors*, available here - http://www.mathworks.com/matlabcentral/fileexchange/33863-histograms-of-oriented-gradients
+    
     d. *LibSVM*, available here - http://www.csie.ntu.edu.tw/~cjlin/libsvm/
-    e. *RFS filter* - http://www.robots.ox.ac.uk/~vgg/research/texclass/
+    
+    e. *RFS filter*, available here - http://www.robots.ox.ac.uk/~vgg/research/texclass/
 
 3.  Run the script *load_packages.m*. This will compile all the required MEX files. (Type ‘*load_packages*’ in the command window and hit ‘*Enter*’).
 
