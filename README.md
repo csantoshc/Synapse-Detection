@@ -39,12 +39,12 @@ This step lets the user manually label synapses across all samples and save the 
 
   ii. Name a new folder where the program will store all the labeled objects, e.g. ‘*trainingset_P1839*’. It should be called like  this -
 
-`>> build_training_data_from_segments(‘P-1839’,'trainingset_P1839');`
+	`>> build_training_data_from_segments(‘P-1839’,'trainingset_P1839');`
 
-3.  Analyzing the images -
+3. Analyzing the images -
     Program to be used *run_synapse_detection.m*. It should be called like this -
 
-`>> run_synapse_detection('P-1839','trainingset_P1839')`
+	`>> run_synapse_detection('P-1839','trainingset_P1839')`
 
 	i.  Parent folder is *P-1839*
 
@@ -59,12 +59,13 @@ Building your own Model: In case you want to build your own Model from scratch d
 In Matlab,
 
 `>> [Features,Labels,Mapping] = build_features_samplewise(trainingsetDir)`
+
 `>> libsvmwrite('Examples.txt',Labels,sparse(Features));`
 
 Then in python do a grid search,
 
 `$ ./grid.py Examples.txt`
-    
+
 This will take a while, maybe 24 hours, depending how fast your computer is and how many examples you have. It will output the values of the two parameters ('*c*' and '*g*'). You can read more about what these parameters mean here: http://www.csie.ntu.edu.tw/~cjlin/libsvm/
 
 Now that you have '*c*' and '*g*', go back to MATLAB and train the classifier using these values as shown below,
