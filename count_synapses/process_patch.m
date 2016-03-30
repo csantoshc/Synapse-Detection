@@ -9,16 +9,17 @@
 %========================================================================%
 
 
-function [Patch,Segment] = process_patch(Patch,Segment,croppix)
+function [Patch,Segment] = process_patch(Patch,Segment)
 %PROCESS_PATCH normalizes, orients, and crops the raw input patch. Also
 %crops the segment.
 
 
 %% Parameters.
-% crop_down = 8; % crop dimensions (e.g. 76x76 -> 61x61).
+oriPatchsize = size(Patch,1);
+rotPatchsize = 61;
+crop_down = ((oriPatchsize - rotPatchsize - 1)/2) + 1;
+% crop_down = 8; % crop dimensions (e.g. 75x75 -> 61x61).
 % crop_down = 13; % crop dimensions (e.g. 125x125 -> 101x101).
-crop_down = croppix;
-
 
 %% Main function.
 

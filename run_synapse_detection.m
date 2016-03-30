@@ -8,12 +8,9 @@
 
 %% Assumption - Each folder in the parent directory has images obtained from a unique sample
 function run_synapse_detection(parentDir, trainingsetDir)
-% croppix = 33 for 125x125 trainingset image -> 61x61 after rotation to align
-% croppix = 13 for 125x125 -> 101x101
-% croppix = 8  for 76x76 -> 61x61
-    croppix = 33;
+
     disp('Building features for labeled synapses')
-    [Features,Labels,Mapping] = build_features_samplewise(trainingsetDir,croppix);
+    [Features,Labels,Mapping] = build_features_samplewise(trainingsetDir);
     save(fullfile(parentDir,'Features_Labels.mat'))
     
 % Load previously constructed features, labels and Model for cortical synapses

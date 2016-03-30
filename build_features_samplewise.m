@@ -8,7 +8,7 @@
 %                                                                        %
 %========================================================================%
 
-function [Features,Labels,Mapping] = build_features_samplewise(Dir,croppix)
+function [Features,Labels,Mapping] = build_features_samplewise(Dir)
 %BUILD_FEATURES builds a feature matrix for the training examples (both
 %positive and negative sets). Also returns a mapping associating each
 %feature vector with its sample.
@@ -18,9 +18,7 @@ function [Features,Labels,Mapping] = build_features_samplewise(Dir,croppix)
 % Then in python do:
 %   $ ./grid.py Classifier1.txt
 
-
 %% Parameters
-% srcdir = '../training_data082013/';
 
 srcdir = Dir;
 num_histogram_bins = 16;
@@ -30,22 +28,28 @@ use_Schmid = 0;
 use_LM = 0;
 use_BW = 1;
 
+%%
+% To determine the size of the Features vector, open one of the Patches and
+% determine its size
+type = 'pos';
+matfiles = dir(sprintf('%s/*%s*.mat',srcdir,type));
+I = load(sprintf('%s/%s',srcdir,matfiles(1).name),'Iw','Is');    
+[Patch,~] = process_patch(I.Iw,I.Is);
 
-%% Main function.
-% croppix = 33 for 125x125 -> 61x61
-% croppix = 13 for 125x125 -> 101x101
-% croppix = 8  for 76x76 -> 61x61
+num_of_orientation_bins = 9;
+block_size = floor(size(Patch,1)/10); %block_size=6 for 61x61 pathces; block_size=10 for 101x101 patches
 
-size_HOG = 324;
 % size of HOG_feat = 324 for 61 pixels
 % size of HOG_feat = 900 for 101 pixels
+size_HOG = num_of_orientation_bins*(block_size^2);
+
+%% Main function.
 
 num_features = use_MR8*(num_histogram_bins+1)*8 + ...
                use_HOG*size_HOG + ...
                use_Schmid*(num_histogram_bins+1)*13 + ...
                use_LM*(num_histogram_bins+1)*48 + ...
                use_BW*10*2;
-
 
 Features = zeros(1,num_features); % num_training x num_features.
 Labels = zeros(1,1);              % num_training x 1.
@@ -70,7 +74,7 @@ for types = {'pos','neg'}
         I = load(sprintf('%s/%s',srcdir,matfiles(ii).name),'Iw','Is');
         
         % Normalize, orient, and crop the patch.
-        [Patch,Segment] = process_patch(I.Iw,I.Is,croppix);
+        [Patch,Segment] = process_patch(I.Iw,I.Is);
                                 
         if (use_MR8)
             MR8_feat = compute_MR8_features(Patch,num_histogram_bins);
@@ -79,14 +83,9 @@ for types = {'pos','neg'}
             MR8_feat = [];
         end
         
-        if (use_HOG)
-            if size_HOG == 324
-                HOG_feat = HoG(Patch,[9,10,6,1,0.2])';%HOG(Patch)';oriented 
-                %HOG_feat = HoG(Patch,[9,10,6,0,0.2])';%HOG(Patch)'; unoriented   
-            elseif size_HOG == 900
-                HOG_feat = HoG(Patch,[9,10,10,1,0.2])';%HOG(Patch)';oriented  % For larger 101 X 101 patches
-            end
-            
+        if (use_HOG)            
+            HOG_feat = HoG(Patch,[num_of_orientation_bins,10,block_size,1,0.2])';%HOG(Patch)';oriented 
+            %HOG_feat = HoG(Patch,[9,10,6,0,0.2])';%HOG(Patch)'; unoriented             
                
         else
             HOG_feat = [];

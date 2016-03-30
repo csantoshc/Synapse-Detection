@@ -23,7 +23,8 @@ max_synapse_size = 60*60;    % max # of segment pixels for synapses.
 min_synapse_perimeter = 90;  % min # of segment pixels for synapse perimeter.
 patch_size = 125;            % size of the patch taken around the centroid. previously was 75
 num_images_per = 10;         % number of images per sample to label.
-
+% Features and final analysis are done on 61x61 pixel patches. Change in
+% 'process_patch.m '
 %% Main function.
 allfiles = dir(dataDir);
 imgfolderidx = [allfiles(:).isdir];

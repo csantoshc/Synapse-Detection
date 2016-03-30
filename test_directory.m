@@ -64,20 +64,12 @@ tic;
 %% Parameters.
 threshold = chosenthreshold;
 num_histogram_bins = 16;
+num_of_orientation_bins = 9;
 bw_thresh = 0.10;            % lower value -> keep less.
 min_synapse_size = 300;      % min # of segment pixels for synapses. 300
 max_synapse_size = 60*60;    % max # of segment pixels for synapses. 60*60
 min_synapse_perimeter = 90;  % min # of segment pixels for synapse perimeter. 90
 patch_size = patchsize;      % size of the patch taken around the centroid. previously 75, now 125
-
-% croppix = 33 for 125x125 -> 61x61
-% croppix = 13 for 125x125 -> 101x101
-% croppix = 8  for 76x76 -> 61x61
-if patch_size == 75
-    croppix = 8;
-elseif patch_size == 125
-    croppix = 33;
-end
 
 %% Main function.
 
@@ -111,20 +103,15 @@ for i=1:n
     Base(Region(i).PixelIdxList) = 1;   
     Is = get_patch_around_centroid(Base,x,y,patch_size);  % includes only the segment of interest.
     
-    [Patch,Segment] = process_patch(Iw,Is,croppix);
+    [Patch,Segment] = process_patch(Iw,Is);
     
     % Compute featurse of the patch.
     MR8_feat = compute_MR8_features(Patch,num_histogram_bins);
     MR8_feat = reshape(MR8_feat,1,(num_histogram_bins+1)*8);
-    if patch_size == 75
-        HOG_feat = HoG(Patch,[9,10,6,1,0.2])';
-    elseif patch_size == 125
-        if croppix == 33
-            HOG_feat = HoG(Patch,[9,10,6,1,0.2])';% for 61 X 61 patches clipped from 125 X 125 patches
-        elseif croppix == 13
-            HOG_feat = HoG(Patch,[9,10,10,1,0.2])'; % for larger 101 X 101 patches clipped from 125 X 125 patches
-        end
-    end
+    
+    block_size = floor(size(Patch,1)/10); %block_size=6 for 61x61 pathces; block_size=10 for 101x101 patches
+    HOG_feat = HoG(Patch,[num_of_orientation_bins,10,block_size,1,0.2])';
+    
     BW_feat = compute_BW_features(Patch,Segment);
 %     size(HOG_feat)
     Features = [MR8_feat HOG_feat BW_feat];

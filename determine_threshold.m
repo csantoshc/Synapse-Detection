@@ -87,7 +87,6 @@ end
 if num_relevant ~= 0
     Model = svmtrain(L_notrelevant,F_notrelevant,'-b 1 -c 8.0 -g 0.5 -q'); 
     % c = 8.0; g = 0.5 for SRE
-    % c = 32.0; g = 0.125 for Npas4
 else
     Model = Model_SRE_61_imqual;
 end
