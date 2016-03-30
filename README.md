@@ -36,19 +36,20 @@ Analysis of images for synapse detection
 
     This step lets the user manually label synapses across all samples and save the labeled images in a single folder Program to be       used – build_training_data_from_segments.m While calling the function,
     
-    i. Specify the parent folder containing all samples.
-    ii. Name a new folder where the program will store all the labeled objects, e.g. ‘trainingset_P1839’. It should be called like            this -
+i.  Specify the parent folder containing all samples.
+ii. Name a new folder where the program will store all the labeled objects, e.g. ‘trainingset_P1839’. It should be called like            this -
 
         >> build_training_data_from_segments(‘P-1839’,'trainingset_P1839');
 
 3.  Analyzing the images -
     Program to be used run_synapse_detection.m It should be called like this –
 
-    >> run_synapse_detection(‘P-1839’,'trainingset_P1839');
+
+        >> run_synapse_detection(‘P-1839’,'trainingset_P1839');
     
-  i.  Parent folder is P-1839
-  ii. The second argument would be the folder you created to store your labeled images (step 2.ii). Here, it would be   trainingset_P1839. This is used by build_features_samplewise to build the feature set for the labeled objects.
-  iii.The confidence threshold will be determined that will proved a recall of 50%. This is done by generating the ROC curves in the         function determine_threshold and then using get_threshold to choose the appropriate threshold.
+i.  Parent folder is P-1839
+ii. The second argument would be the folder you created to store your labeled images (step 2.ii). Here, it would be trainingset_P1839.     This is used by build_features_samplewise to build the feature set for the labeled objects.
+iii.The confidence threshold will be determined that will proved a recall of 50%. This is done by generating the ROC curves in the         function determine_threshold and then using get_threshold to choose the appropriate threshold.
 iv. Then, the function test_directory will go through all samples individually that are part of the parent folder and analyze all the     images in each sample folder to detect synapses based on the threshold.
 
 Building your own Model: In case you want to build your own Model from scratch do the following
