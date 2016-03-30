@@ -38,16 +38,19 @@ Analysis of images for synapse detection
     
 i.  Specify the parent folder containing all samples.
 
-ii. Name a new folder where the program will store all the labeled objects, e.g. ‘trainingset_P1839’. It should be called like            this -
+ii. Name a new folder where the program will store all the labeled objects, e.g. ‘trainingset_P1839’. 
+    It should be called like  this -
 
-        >> build_training_data_from_segments(‘P-1839’,'trainingset_P1839');
+      >> build_training_data_from_segments(‘P-1839’,'trainingset_P1839');
 
 3.  Analyzing the images -
-    Program to be used run_synapse_detection.m It should be called like this –
+    Program to be used run_synapse_detection.m 
+    It should be called like this –
 
 
-        >> run_synapse_detection(‘P-1839’,'trainingset_P1839');
-    
+      >> run_synapse_detection(‘P-1839’,'trainingset_P1839');
+
+
 i.  Parent folder is P-1839
 
 ii. The second argument would be the folder you created to store your labeled images (step 2.ii). Here, it would be trainingset_P1839.     This is used by build_features_samplewise to build the feature set for the labeled objects.
