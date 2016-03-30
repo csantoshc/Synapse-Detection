@@ -19,7 +19,8 @@ for ii=1:size(Output,1)
     Thresholds = Output{ii,6};
 
     % Get index when recall is roughly 50%.
-    idx = find(Recall > 0.492 & Recall < 0.502,1,'first');
+%     idx = find(Recall > 0.492 & Recall < 0.502,1,'first');
+    [~,idx] = min(abs(Recall - 0.500));
     fprintf('%s\tthr=%.3f\tprec=%.3f\trecall=%.3f\n', Output{ii,1}, Thresholds(idx), Precisions(idx), Recall(idx));
     Threshold = Thresholds(idx);
     Precision = Precisions(idx);

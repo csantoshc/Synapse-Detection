@@ -12,8 +12,10 @@ function run_synapse_detection(parentDir, trainingsetDir)
 % croppix = 13 for 125x125 -> 101x101
 % croppix = 8  for 76x76 -> 61x61
     croppix = 33;
+    disp('Building features for labeled synapses')
     [Features,Labels,Mapping] = build_features_samplewise(trainingsetDir,croppix);
     save(fullfile(parentDir,'Features_Labels.mat'))
+    
 % Load previously constructed features, labels and Model for cortical synapses
     load('Features_Label_SRE_125_61.mat')  
 
