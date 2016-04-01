@@ -20,9 +20,9 @@ patch_size = 125;            % size of the patch taken around the centroid. prev
     start = tic;
     [~,samplename,~] = fileparts(srcdir);
     % Read images, check case of 'tif'.
-    imagefiles = dir(fullfile(srcdir,'*.TIF',filesep));
+    imagefiles = dir(fullfile(srcdir,'*.TIF'));
     if isempty(imagefiles)
-        imagefiles = dir(fullfile(srcdir,'*.tif',filesep));
+        imagefiles = dir(fullfile(srcdir,'*.tif'));
     end
     
     if isempty(imagefiles) == 1
@@ -38,7 +38,7 @@ patch_size = 125;            % size of the patch taken around the centroid. prev
         clear num_pos Binaryimg Hits X Y
         for ii=1:length(imagefiles)
     %     for ii = 1:5  
-            Iname = fullfile(srcdir,imagefiles(ii).name,filesep);
+            Iname = fullfile(srcdir,imagefiles(ii).name);
             I = imcomplement(mat2gray(imread(Iname)));
 
             [num_pos(ii),Binaryimg(ii,:,:),Hits{ii},X{ii},Y{ii}, minsize] = test_image(I,Model,out,imagefiles(ii).name,chosenthreshold,patch_size);
