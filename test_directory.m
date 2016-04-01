@@ -6,7 +6,7 @@
 %                                                                        %
 %========================================================================%
 
-function test_directory(Model,threshold,srcDir)
+function test_directory(Model,threshold,srcdir)
 
 %TEST_DIRECTORY counts synapses in a directory of images.
 %% Parameters
@@ -18,27 +18,27 @@ patch_size = 125;            % size of the patch taken around the centroid. prev
    
     chosenthreshold = threshold;
     start = tic;
-    [~,samplename,~] = fileparts(srcDir);
+    [~,samplename,~] = fileparts(srcdir);
     % Read images, check case of 'tif'.
-    imagefiles = dir([srcDir '/*.TIF']);
+    imagefiles = dir(fullfile(srcdir,'*.TIF',filesep));
     if isempty(imagefiles)
-        imagefiles = dir([srcDir '/*.tif']);
+        imagefiles = dir(fullfile(srcdir,'*.tif',filesep));
     end
     
     if isempty(imagefiles) == 1
-        sprintf('%s',srcDir)
+        sprintf('%s',srcdir)
         disp('No image files found. Continuing to next...')
     else
     
     % Open out file and write header.
-        out = fopen(fullfile(fileparts(srcDir),[samplename '_counts.txt']),'w');
+        out = fopen(fullfile(fileparts(srcdir),[samplename '_counts.txt']),'w');
         fprintf(out,'#ImageName\tWindow\tConf\tMajorAx\tPerim\tArea\n');
 
         num_pos = zeros(length(imagefiles),1);
         clear num_pos Binaryimg Hits X Y
         for ii=1:length(imagefiles)
     %     for ii = 1:5  
-            Iname = [srcDir '/' imagefiles(ii).name];
+            Iname = [srcdir '/' imagefiles(ii).name];
             I = imcomplement(mat2gray(imread(Iname)));
 
             [num_pos(ii),Binaryimg(ii,:,:),Hits{ii},X{ii},Y{ii}, minsize] = test_image(I,Model,out,imagefiles(ii).name,chosenthreshold,patch_size);
@@ -49,7 +49,7 @@ patch_size = 125;            % size of the patch taken around the centroid. prev
         fprintf('%s (%i images). %.2f, %.2f: Avg=%.3f, Std=%.3f\n',samplename,length(imagefiles),chosenthreshold,minsize,mean(num_pos),std(num_pos));
 
         %Save BWimage and X, Y of predicted synapses
-         save(fullfile(fileparts(srcDir),[samplename  '_Processed.mat']),'imagefiles','num_pos','Binaryimg','Hits','X','Y')
+         save(fullfile(fileparts(srcdir),[samplename  '_Processed.mat']),'imagefiles','num_pos','Binaryimg','Hits','X','Y')
 
         fclose(out);
         toc(start);

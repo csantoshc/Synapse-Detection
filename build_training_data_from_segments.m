@@ -46,12 +46,11 @@ for dirs = directories
     srcdir=fullfile(dataDir,Imagedirs{dirs});
     fprintf('Current sample is %s\n', Imagedirs{dirs})
 
-
     % Checks case of '.tif' vs. '.TIF'
 
-    imagefiles = dir([srcdir '\*.TIF']);
+    imagefiles = dir(fullfile(srcdir,'*.TIF',filesep));
     if isempty(imagefiles)
-        imagefiles = dir([srcdir '\*.tif']);
+        imagefiles = dir(fullfile(srcdir,'*.tif',filesep));
         if isempty(Imagedirs)
             disp('Error: No images (TIFF files) detected')
             return
