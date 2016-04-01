@@ -38,7 +38,7 @@ patch_size = 125;            % size of the patch taken around the centroid. prev
         clear num_pos Binaryimg Hits X Y
         for ii=1:length(imagefiles)
     %     for ii = 1:5  
-            Iname = [srcdir '/' imagefiles(ii).name];
+            Iname = fullfile(srcdir,imagefiles(ii).name,filesep);
             I = imcomplement(mat2gray(imread(Iname)));
 
             [num_pos(ii),Binaryimg(ii,:,:),Hits{ii},X{ii},Y{ii}, minsize] = test_image(I,Model,out,imagefiles(ii).name,chosenthreshold,patch_size);
